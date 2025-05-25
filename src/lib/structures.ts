@@ -1,4 +1,4 @@
-import { Point, Extent, Polygon } from "./types";
+import type { Point, Extent, Polygon } from "./types";
 
 export function extentLength(extent: Extent): number {
   return extent.end - extent.start;
@@ -27,7 +27,6 @@ export function scalePolygon(polygon: Polygon, factor: number): Polygon {
 export function extentOutline(
   curve: (i: number) => number,
   extent: Extent,
-  selected: boolean,
   width: number,
   height: number
 ): Polygon {

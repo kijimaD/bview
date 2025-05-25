@@ -1,5 +1,5 @@
 import { extentLength, newPolygon, scalePolygon } from "./structures";
-import { Polygon, Point } from "./types";
+import type { Polygon, Point } from "./types";
 
 test("extentLength", () => {
   expect(extentLength({ start: 1, end: 2 })).toBe(1);
