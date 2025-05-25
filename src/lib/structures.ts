@@ -28,7 +28,7 @@ export function extentOutline(
   curve: (i: number) => number,
   extent: Extent,
   width: number,
-  height: number
+  height: number,
 ): Polygon {
   const len = extentLength(extent);
   const points: Point[] = [];

@@ -4,15 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "dev": "vite",
+    "fmt": "npx prettier . --write",
     "preview": "vite preview",
     "test": "jest"
   },
   "dependencies": {
     "@types/jest": "^29.5.14",
     "jest": "^29.7.0",
+    "prettier": "^3.5.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "ts-jest": "^29.3.4",

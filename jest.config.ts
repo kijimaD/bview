@@ -3,12 +3,12 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+import type { Config } from "jest";
 
 const config: Config = {
-  preset: 'ts-jest',
+  preset: "ts-jest",
   // 理由: https://qiita.com/masato_makino/items/269617904a7660c85edd
-  transformIgnorePatterns: ['/node_modules'],
+  transformIgnorePatterns: ["/node_modules"],
 };
 
 export default config;
