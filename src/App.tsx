@@ -1,6 +1,6 @@
 import "./App.css";
-import { CrawlerCanvas } from "./components/CrawlerCanvas";
 import { FileLoadPage } from "./pages/FileLoadPage";
+import { ViewPage } from "./pages/ViewPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -8,15 +8,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <FileLoadPage /> <CrawlerCanvas />
-              </>
-            }
-          />
-          <Route path="*" element={<h1>Not Found Page</h1>} />
+          <Route path="/load" element={<FileLoadPage />} />
+          <Route path="/view" element={<ViewPage />} />
+          <Route path="*" element={<h1>Not Found Page!</h1>} />
         </Routes>
       </BrowserRouter>
     </div>

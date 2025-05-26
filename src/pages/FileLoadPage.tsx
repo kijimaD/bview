@@ -1,3 +1,3 @@
 export function FileLoadPage() {
-  return <div>hello</div>;
+  return <div>file load</div>;
 }
