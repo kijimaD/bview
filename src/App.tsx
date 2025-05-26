@@ -1,20 +1,25 @@
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { CrawlerCanvas } from "./components/CrawlerCanvas";
+import { FileLoadPage } from "./pages/FileLoadPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>
-        ↓
-        <CrawlerCanvas />
-      </p>
-    </>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <FileLoadPage /> <CrawlerCanvas />
+              </>
+            }
+          />
+          <Route path="*" element={<h1>Not Found Page</h1>} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
