@@ -3,7 +3,7 @@ import { CrawlerCanvas } from "../components/CrawlerCanvas";
 export function ViewPage() {
   return (
     <>
-      <div>viewer</div>
+      <h1>viewer</h1>
       <CrawlerCanvas />
     </>
   );

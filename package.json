@@ -9,9 +9,14 @@
     "fmt": "npx prettier . --write",
     "preview": "vite preview",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "check": "npm run test && npm run build && npm run lint && npm run fmt"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.19.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "framer-motion": "^12.14.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.1",
