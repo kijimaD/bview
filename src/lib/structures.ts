@@ -1,4 +1,5 @@
-import type { Point, Extent, Polygon } from "./types";
+import type { View, Point, Extent, Polygon } from "./types";
+import type { Curve } from "./curve";
 
 export function extentLength(extent: Extent): number {
   return extent.end - extent.start;
@@ -12,42 +13,44 @@ export function newExtent(start: number, end: number): Extent {
 }
 
 export function newPolygon(points: Point[]): Polygon {
-  return { points };
+  return points;
 }
 
 export function scalePolygon(polygon: Polygon, factor: number): Polygon {
-  return {
-    points: polygon.points.map((p) => ({
-      x: p.x * factor,
-      y: p.y * factor,
-    })),
-  };
+  return polygon.map((p) => ({
+    x: p.x * factor,
+    y: p.y * factor,
+  }));
 }
 
-export function extentOutline(
-  curve: (i: number) => number,
+export const extentOutline = (
+  curve: Curve,
+  view: View,
   extent: Extent,
-  width: number,
-  height: number,
-): Polygon {
-  const len = extentLength(extent);
-  const points: Point[] = [];
+  w: number,
+  h: number,
+): Polygon => {
+  console.log(curve, view, extent, w, h);
+  // const scale = (w * h) / view.len();
+  // const view_start = Math.ceil((extent.start - view.start) * scale);
+  // const view_end = Math.ceil((extent.end - view.start) * scale) - 1;
 
-  const stride = Math.max(Math.floor(len / width), 1);
+  // const oncurve = (x: Point): boolean => {
+  //   if (x.x < 0 || x.y < 0) return false;
+  //   if (x.x > w || x.y > h) return false;
 
-  // Top line: left to right
-  for (let i = extent.start; i < extent.end; i += stride) {
-    const x = ((i - extent.start) / len) * width;
-    const y = curve(i) * height;
-    points.push({ x, y });
-  }
+  //   const v = curve.pointToOffset(x, w, h);
+  //   return v >= view_start && v <= view_end;
+  // };
 
-  // Bottom line: right to left
-  for (let i = extent.end; i > extent.start; i -= stride) {
-    const x = ((i - extent.start) / len) * width;
-    const y = height; // baseline
-    points.push({ x, y });
-  }
+  // let poly = Polygon.construct(
+  //   curve.offsetToPoint(view_start, w, h),
+  //   oncurve
+  // );
 
-  return newPolygon(points);
-}
+  // poly = Polygon.trim(poly);
+  // poly = Polygon.outline(poly, oncurve);
+
+  const poly: Polygon = [];
+  return poly;
+};

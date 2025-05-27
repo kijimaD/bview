@@ -8,6 +8,9 @@ export type Extent = {
   end: number;
 };
 
-export type Polygon = {
-  points: Point[];
+export type Polygon = Point[];
+
+export type View = {
+  start: number;
+  len: () => number;
 };

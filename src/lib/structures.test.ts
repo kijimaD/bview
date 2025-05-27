@@ -13,56 +13,46 @@ test("newPolygon", () => {
       { x: 0, y: 0 },
       { x: 1, y: 1 },
     ];
-    const expected: Polygon = {
-      points: [
-        { x: 0, y: 0 },
-        { x: 1, y: 1 },
-      ],
-    };
+    const expected: Polygon = [
+      { x: 0, y: 0 },
+      { x: 1, y: 1 },
+    ];
     expect(newPolygon(input)).toStrictEqual(expected);
   }
 });
 
 describe("scalePolygon", () => {
   it("スケールできる", () => {
-    const input: Polygon = {
-      points: [
-        { x: 1, y: 1 },
-        { x: 2, y: 2 },
-        { x: -1, y: -1 },
-      ],
-    };
-    const expected: Polygon = {
-      points: [
-        { x: 2, y: 2 },
-        { x: 4, y: 4 },
-        { x: -2, y: -2 },
-      ],
-    };
+    const input: Polygon = [
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+      { x: -1, y: -1 },
+    ];
+    const expected: Polygon = [
+      { x: 2, y: 2 },
+      { x: 4, y: 4 },
+      { x: -2, y: -2 },
+    ];
 
     expect(scalePolygon(input, 2)).toEqual(expected);
   });
 
   it("0にスケールできる", () => {
-    const input: Polygon = {
-      points: [
-        { x: 1, y: 1 },
-        { x: 5, y: 3 },
-      ],
-    };
-    const expected: Polygon = {
-      points: [
-        { x: 0, y: 0 },
-        { x: 0, y: 0 },
-      ],
-    };
+    const input: Polygon = [
+      { x: 1, y: 1 },
+      { x: 5, y: 3 },
+    ];
+    const expected: Polygon = [
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+    ];
 
     expect(scalePolygon(input, 0)).toEqual(expected);
   });
 
   it("空配列の場合変わらない", () => {
-    const input: Polygon = { points: [] };
-    const expected: Polygon = { points: [] };
+    const input: Polygon = [];
+    const expected: Polygon = [];
 
     expect(scalePolygon(input, 5)).toEqual(expected);
   });
