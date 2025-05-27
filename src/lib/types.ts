@@ -14,3 +14,5 @@ export type View = {
   start: number;
   len: () => number;
 };
+
+export type OnCurve = (p: Point) => boolean;

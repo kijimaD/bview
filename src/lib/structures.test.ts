@@ -1,5 +1,12 @@
-import { extentLength, newPolygon, scalePolygon } from "./structures";
-import type { Polygon, Point } from "./types";
+import {
+  rotate,
+  extentLength,
+  scalePolygon,
+  newExtent,
+  pointEq,
+  neighbours,
+} from "./structures";
+import type { Point, Polygon, Extent } from "./types";
 
 test("extentLength", () => {
   expect(extentLength({ start: 1, end: 2 })).toBe(1);
@@ -7,18 +14,21 @@ test("extentLength", () => {
   expect(extentLength({ start: 10, end: 2 })).toBe(-8);
 });
 
-test("newPolygon", () => {
-  {
-    const input: Point[] = [
-      { x: 0, y: 0 },
-      { x: 1, y: 1 },
-    ];
-    const expected: Polygon = [
-      { x: 0, y: 0 },
-      { x: 1, y: 1 },
-    ];
-    expect(newPolygon(input)).toStrictEqual(expected);
-  }
+describe("newExtent", () => {
+  it("初期化できる", () => {
+    const input = { start: 1, end: 4 };
+    const expected: Extent = { start: 1, end: 4 };
+
+    expect(newExtent(input.start, input.end).start).toEqual(expected.start);
+    expect(newExtent(input.start, input.end).end).toEqual(expected.end);
+  });
+
+  it("大小が逆でも正しく変換される", () => {
+    const input = { start: 4, end: 1 };
+    const expected: Extent = { start: 1, end: 4 };
+
+    expect(newExtent(input.start, input.end)).toEqual(expected);
+  });
 });
 
 describe("scalePolygon", () => {
@@ -55,5 +65,48 @@ describe("scalePolygon", () => {
     const expected: Polygon = [];
 
     expect(scalePolygon(input, 5)).toEqual(expected);
+  });
+});
+
+test("pointEq", () => {
+  const inputA: Point = { x: 1, y: 2 };
+  const inputB: Point = { x: 1, y: 2 };
+  const inputC: Point = { x: 3, y: 4 };
+
+  expect(pointEq(inputA, inputB)).toEqual(true);
+  expect(pointEq(inputA, inputC)).toEqual(false);
+});
+
+describe("neighbours", () => {
+  it("取得できる", () => {
+    const input: Point = { x: 1, y: 2 };
+    const expected: Point[] = [
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+      { x: 1, y: 3 },
+      { x: 0, y: 2 },
+    ];
+    expect(neighbours(input)).toEqual(expected);
+  });
+});
+
+describe("rotate", () => {
+  it("入れ替えできる", () => {
+    const input: Polygon = [
+      { x: 1, y: 1 },
+      { x: 1, y: 2 },
+      { x: 1, y: 3 },
+    ];
+    const expected: Polygon = [
+      { x: 1, y: 3 },
+      { x: 1, y: 1 },
+      { x: 1, y: 2 },
+    ];
+    expect(rotate(input, 2)).toEqual(expected);
+  });
+  it("numberでも使える", () => {
+    const input: number[] = [1, 2, 3, 4, 5];
+    const expected: number[] = [3, 4, 5, 1, 2];
+    expect(rotate(input, 2)).toEqual(expected);
   });
 });

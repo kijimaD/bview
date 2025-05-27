@@ -9,11 +9,11 @@ export function ViewPage() {
       <h1>viewer</h1>
       {state.fileName ? (
         <>
-          <p>📄 ファイル名: {state.fileName}</p>
-          <p>📦 バイト長: {state.bytes?.length}</p>
+          <p>📄 file name: {state.fileName}</p>
+          <p>📦 byte length: {state.bytes?.length}</p>
         </>
       ) : (
-        <p>ファイルが読み込まれていません。</p>
+        <p>file not loaded</p>
       )}
       <CrawlerCanvas />
     </>
