@@ -1,20 +1,23 @@
-import reactLogo from "./assets/react.svg";
 import "./App.css";
-import { CrawlerCanvas } from "./components/CrawlerCanvas";
+import { FileLoadPage } from "./pages/FileLoadPage";
+import { ViewPage } from "./pages/ViewPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { AppProvider } from "./hooks/app/AppProvider";
 
 function App() {
   return (
-    <>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>
-        ↓
-        <CrawlerCanvas />
-      </p>
-    </>
+    <ChakraProvider value={defaultSystem}>
+      <AppProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/load" element={<FileLoadPage />} />
+            <Route path="/view" element={<ViewPage />} />
+            <Route path="*" element={<h1>Not Found Page!</h1>} />
+          </Routes>
+        </BrowserRouter>
+      </AppProvider>
+    </ChakraProvider>
   );
 }
 
