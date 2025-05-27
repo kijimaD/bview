@@ -11,11 +11,7 @@ export function FileLoadPage() {
 }
 
 const LoadFile = () => {
-  const { handleFileLoad } = useFileLoader({
-    onLoad: () => {
-      console.log("loading...");
-    },
-  });
+  const { handleFileLoad } = useFileLoader();
 
   return (
     <FileUpload.Root gap="1" maxWidth="300px">

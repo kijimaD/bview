@@ -1,35 +1,26 @@
-import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import type { ChangeEvent } from "react";
 
-interface Props {
-  onLoad: (filename: string, data: Uint8Array) => void;
-}
-
-export const useFileLoader = ({ onLoad }: Props) => {
+export const useFileLoader = () => {
   const navigate = useNavigate();
 
-  const handleFileLoad = useCallback(
-    (evt: React.ChangeEvent<HTMLInputElement>) => {
-      const file = evt.target.files?.[0];
-      if (!file) return;
+  const handleFileLoad = (evt: ChangeEvent<HTMLInputElement>) => {
+    const file = evt.target.files?.[0];
+    if (!file) return;
 
-      const reader = new FileReader();
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = () => {
+      const arrayBuffer = reader.result as ArrayBuffer;
+      const bytes = new Uint8Array(arrayBuffer);
 
-      reader.onload = () => {
-        const result = reader.result;
-        if (result instanceof ArrayBuffer) {
-          const bytes = new Uint8Array(result, 0, result.byteLength);
-          onLoad(file.name, bytes);
-          navigate("/view");
-        } else {
-          console.error("Unexpected reader.result type");
-        }
-      };
+      console.log(bytes);
+      // viewstore.actions.load.trigger(true, file.name, bytes);
 
-      reader.readAsArrayBuffer(file);
-    },
-    [onLoad, navigate],
-  );
+      // 画面遷移
+      navigate("/view");
+    };
+  };
 
   return { handleFileLoad };
 };
