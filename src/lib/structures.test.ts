@@ -5,6 +5,8 @@ import {
   newExtent,
   pointEq,
   neighbours,
+  dir,
+  pointSub,
 } from "./structures";
 import type { Point, Polygon, Extent } from "./types";
 
@@ -108,5 +110,21 @@ describe("rotate", () => {
     const input: number[] = [1, 2, 3, 4, 5];
     const expected: number[] = [3, 4, 5, 1, 2];
     expect(rotate(input, 2)).toEqual(expected);
+  });
+});
+
+describe("dir", () => {
+  it("方向を返す", () => {
+    {
+      // A
+      // B
+      const input = pointSub({ x: 1, y: 1 }, { x: 1, y: 2 });
+      expect(dir(input)).toEqual("u");
+    }
+    {
+      // A B
+      const input = pointSub({ x: 1, y: 1 }, { x: 2, y: 1 });
+      expect(dir(input)).toEqual("l");
+    }
   });
 });

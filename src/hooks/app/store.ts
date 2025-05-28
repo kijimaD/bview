@@ -1,11 +1,20 @@
+import type { View } from "../../lib/types";
+
 export type AppState = {
   fileName: string | null;
   bytes: Uint8Array | null;
+  view: View;
 };
 
 export const initialState: AppState = {
   fileName: null,
   bytes: null,
+  view: {
+    start: 0,
+    len: (): number => {
+      return 0;
+    },
+  },
 };
 
 export type Action =
@@ -19,6 +28,12 @@ export function reducer(state: AppState, action: Action): AppState {
         ...state,
         fileName: action.payload.fileName,
         bytes: action.payload.bytes,
+        view: {
+          start: 0,
+          len: (): number => {
+            return action.payload.bytes.length;
+          },
+        },
       };
     case "CLEAR_FILE":
       return initialState;

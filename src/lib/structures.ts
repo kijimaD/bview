@@ -1,6 +1,12 @@
 import type { View, Point, Extent, Polygon, OnCurve } from "./types";
 import type { Curve } from "./curve";
 
+// +--------→ x（→）
+// |
+// |
+// ↓
+// y（↓）
+
 // ================
 // Extent
 
