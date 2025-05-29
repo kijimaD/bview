@@ -17,3 +17,9 @@ export type View = {
 };
 
 export type OnCurve = (p: Point) => boolean;
+
+export type Rect = {
+  point: Point;
+  w: number;
+  h: number;
+};

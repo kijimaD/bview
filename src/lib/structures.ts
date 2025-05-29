@@ -1,4 +1,4 @@
-import type { View, Point, Extent, Polygon, OnCurve } from "./types";
+import type { View, Point, Extent, Polygon, OnCurve,Rect } from "./types";
 import type { Curve } from "./curve";
 
 // +--------→ x（→）
@@ -49,7 +49,7 @@ export const extentOutline = (
 
   let poly = constructPolygon(curve.offsetToPoint(view_start, w, h), oncurve);
   poly = trimPolygon(poly);
-  poly = outlinePolygon(poly);
+  // poly = outlinePolygon(poly);
 
   return poly;
 };
@@ -228,3 +228,35 @@ export const outlinePolygon = (points: Polygon): Polygon => {
     }
   });
 };
+
+// ================
+// Rect
+
+export function createRect(x: number, y: number, w: number = 1, h: number = 1): Rect {
+  return {
+    point: { x, y },
+    w,
+    h,
+  };
+}
+
+export function rectToString(rect: Rect): string {
+  return `Rect(${rect.point.x}, ${rect.point.y}, ${rect.w}, ${rect.h})`;
+}
+
+export function scaleRect(rect: Rect, f: number): Rect {
+  const sx = Math.floor(rect.point.x * f);
+  const sy = Math.floor(rect.point.y * f);
+  const sw = Math.ceil((rect.point.x + rect.w) * f) - sx;
+  const sh = Math.ceil((rect.point.y + rect.h) * f) - sy;
+  return createRect(sx, sy, sw, sh);
+}
+
+export function rectContains(rect: Rect, p: Point): boolean {
+  return (
+    p.x >= rect.point.x &&
+    p.x < rect.point.x + rect.w &&
+    p.y >= rect.point.y &&
+    p.y < rect.point.y + rect.h
+  );
+}
