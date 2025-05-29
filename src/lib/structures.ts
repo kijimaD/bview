@@ -1,4 +1,4 @@
-import type { View, Point, Extent, Polygon, OnCurve,Rect } from "./types";
+import type { View, Point, Extent, Polygon, OnCurve, Rect } from "./types";
 import type { Curve } from "./curve";
 
 // +--------→ x（→）
@@ -232,7 +232,12 @@ export const outlinePolygon = (points: Polygon): Polygon => {
 // ================
 // Rect
 
-export function createRect(x: number, y: number, w: number = 1, h: number = 1): Rect {
+export function createRect(
+  x: number,
+  y: number,
+  w: number = 1,
+  h: number = 1,
+): Rect {
   return {
     point: { x, y },
     w,
