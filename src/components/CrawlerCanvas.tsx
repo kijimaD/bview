@@ -1,3 +1,4 @@
+// バイナリブロックにマウスオーバー表示する
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { extentOutline, scalePolygon } from "../lib/structures";
 import { Scan } from "../lib/curve";
@@ -6,8 +7,7 @@ import { useAppContext } from "../hooks/app/AppContext";
 export const CrawlerCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [realSize, setRealSize] = useState({ width: 500, height: 500 });
-  console.log(realSize);
+  const [realSize, setRealSize] = useState({ width: 128, height: 128 });
 
   const handleResize = useCallback(() => {
     if (canvasRef.current) {
@@ -120,6 +120,7 @@ export const CrawlerCanvas = () => {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
       onDoubleClick={handleDoubleClick}
+      className="crawercanvas"
     />
   );
 };
