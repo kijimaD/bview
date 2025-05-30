@@ -1,6 +1,7 @@
 import "./App.css";
 import { FileLoadPage } from "./pages/FileLoadPage";
 import { ViewPage } from "./pages/ViewPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { AppProvider } from "./hooks/app/AppProvider";
@@ -15,7 +16,7 @@ function App() {
             <Route path="/" element={<AppLayout />}>
               <Route path="/load" element={<FileLoadPage />} />
               <Route path="/view" element={<ViewPage />} />
-              <Route path="*" element={<h1>Not Found Page!</h1>} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -1,11 +1,38 @@
-import { Box } from "@chakra-ui/react";
 import { Outlet } from "react-router";
+import { Container, Box, Flex, HStack, Heading, Link } from "@chakra-ui/react";
+
+type Props = {
+  href?: string;
+  children?: React.ReactNode;
+};
+
+const NavLink = (props: Props) => {
+  const { children, href } = props;
+
+  return (
+    <Link px={2} href={href}>
+      {children}
+    </Link>
+  );
+};
 
 export const AppLayout = () => {
   return (
-    <Box>
-      this is layout...
-      <Outlet />
-    </Box>
+    <>
+      <Box>
+        <Flex>
+          <HStack>
+            <Heading>BVIEW</Heading>
+            <HStack>
+              <NavLink href={"load"}>Load</NavLink>
+              <NavLink href={"view"}>View</NavLink>
+            </HStack>
+          </HStack>
+        </Flex>
+      </Box>
+      <Container minW="60%" py="1em">
+        <Outlet />
+      </Container>
+    </>
   );
 };

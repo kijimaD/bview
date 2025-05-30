@@ -1,10 +1,9 @@
 import { useFileLoader } from "../hooks/fileloader";
-import { Heading, FileUpload, Input } from "@chakra-ui/react";
+import { FileUpload, Input } from "@chakra-ui/react";
 
 export function FileLoadPage() {
   return (
     <>
-      <Heading size="4xl">file load</Heading>
       <LoadFile />
     </>
   );
