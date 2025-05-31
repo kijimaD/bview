@@ -56,7 +56,6 @@ export const CrawlerCanvas = () => {
     );
 
     poly = scalePolygon(poly, factor);
-    // this.save_poly(poly);
     ctx.beginPath();
     function xrange(x: number): number {
       if (canvas === null) return 0;

@@ -30,7 +30,7 @@ export const AppLayout = () => {
           </HStack>
         </Flex>
       </Box>
-      <Container minW="60%" py="1em">
+      <Container py="1em">
         <Outlet />
       </Container>
     </>

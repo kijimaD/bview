@@ -1,7 +1,7 @@
 import { CrawlerCanvas } from "../components/CrawlerCanvas";
 import { FileCanvas } from "../components/FileCanvas";
 import { useAppContext } from "../hooks/app/AppContext";
-import { Text } from "@chakra-ui/react";
+import { Text, Flex, Box, HStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -34,16 +34,25 @@ export function ViewPage() {
 
   return (
     <>
-      {state.fileName ? (
-        <>
-          <Text>📄 file name: {state.fileName}</Text>
-          <Text>📦 byte length: {state.bytes?.length}</Text>
-        </>
-      ) : (
-        <Text>file not loaded</Text>
-      )}
-      <CrawlerCanvas />
-      <FileCanvas />
+      <Flex direction="row">
+        <Box flex="1" p={2}>
+          <CrawlerCanvas />
+          <FileCanvas />
+        </Box>
+        <Box flex="1" p={2}>
+          {state.fileName ? (
+            <>
+              <HStack>
+                <Text>📄 {state.fileName}</Text>
+                <Text>📦 {state.bytes?.length}</Text>
+              </HStack>
+            </>
+          ) : (
+            <Text>file not loaded</Text>
+          )}
+          テーブル
+        </Box>
+      </Flex>
     </>
   );
 }
