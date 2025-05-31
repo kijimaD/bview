@@ -3,11 +3,10 @@ import { FileCanvas } from "../components/FileCanvas";
 import { useAppContext } from "../hooks/app/AppContext";
 import { Badge, Text, Flex, Box, HStack } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export function ViewPage() {
   const { state, dispatch } = useAppContext();
-  const url = useLocation().search;
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export function ViewPage() {
           console.error("load error:", err);
         });
     }
-  }, [searchParams]);
+  }, [searchParams, dispatch]);
 
   return (
     <>
