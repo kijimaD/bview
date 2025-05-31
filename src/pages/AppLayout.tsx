@@ -22,9 +22,10 @@ export const AppLayout = () => {
       <Box>
         <Flex>
           <HStack>
-            <Heading>BVIEW</Heading>
+            <Heading>
+              <Link href="/">BVIEW</Link>
+            </Heading>
             <HStack>
-              <NavLink href={"load"}>Load</NavLink>
               <NavLink href={"view?f=sample/ls"}>ls</NavLink>
               <NavLink href={"view?f=sample/rfc9593.txt"}>txt</NavLink>
               <NavLink href={"view?f=sample/go_hello"}>go binary</NavLink>

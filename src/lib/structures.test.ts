@@ -149,7 +149,7 @@ describe("outlinePolygon", () => {
       outlinePolygon([
         { x: 1, y: 1 },
         { x: 3, y: 1 },
-      ])
+      ]);
     }).toThrow("Unexpected corner direction: ??");
   });
 });

@@ -14,8 +14,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<AppLayout />}>
-              <Route path="/load" element={<FileLoadPage />} />
               <Route path="/view" element={<ViewPage />} />
+              <Route path="/" element={<FileLoadPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
