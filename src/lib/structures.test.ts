@@ -7,6 +7,7 @@ import {
   neighbours,
   dir,
   pointSub,
+  outlinePolygon,
 } from "./structures";
 import type { Point, Polygon, Extent } from "./types";
 
@@ -126,5 +127,34 @@ describe("dir", () => {
       const input = pointSub({ x: 1, y: 1 }, { x: 2, y: 1 });
       expect(dir(input)).toEqual("l");
     }
+  });
+});
+
+describe("outlinePolygon", () => {
+  it("枠を返す", () => {
+    expect(
+      outlinePolygon([
+        { x: 1, y: 1 },
+        { x: 2, y: 1 },
+      ]),
+    ).toEqual([
+      { x: 1, y: 2 },
+      { x: 1, y: 1 },
+      { x: 3, y: 1 },
+      { x: 3, y: 2 },
+    ]);
+  });
+  it("error", () => {
+    expect(
+      outlinePolygon([
+        { x: 1, y: 1 },
+        { x: 3, y: 1 },
+      ]),
+    ).toEqual([
+      { x: 1, y: 2 },
+      { x: 1, y: 1 },
+      { x: 3, y: 1 },
+      { x: 3, y: 2 },
+    ]);
   });
 });
