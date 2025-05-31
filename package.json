@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",
-    "production": "vite build --mode production",
+    "production": "vite build --mode production && cp dist/index.html dist/404.html",
     "dev": "vite",
     "fmt": "npx prettier . --write",
     "preview": "vite preview",
