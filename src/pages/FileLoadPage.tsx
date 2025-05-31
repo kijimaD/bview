@@ -4,7 +4,6 @@ import { FileUpload, Input } from "@chakra-ui/react";
 export function FileLoadPage() {
   return (
     <>
-      <h1>file load</h1>
       <LoadFile />
     </>
   );
