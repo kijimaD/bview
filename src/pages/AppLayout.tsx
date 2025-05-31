@@ -25,7 +25,7 @@ export const AppLayout = () => {
             <Heading>BVIEW</Heading>
             <HStack>
               <NavLink href={"load"}>Load</NavLink>
-              <NavLink href={"view"}>View</NavLink>
+              <NavLink href={"view?f=sample/ls"}>ls</NavLink>
             </HStack>
           </HStack>
         </Flex>
