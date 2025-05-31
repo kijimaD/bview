@@ -14,11 +14,12 @@ export const FileCanvas = () => {
   const viewHeight = 1024;
 
   const handleResize = useCallback(() => {
-    if (canvasRef.current) {
-      const { offsetWidth, offsetHeight } = canvasRef.current;
-      setRealSize({ width: offsetWidth, height: offsetHeight });
+    if (canvasRef.current && state.bytes) {
+      const { offsetWidth } = canvasRef.current;
+      const height = state.bytes?.length / 32;
+      setRealSize({ width: offsetWidth, height: height });
     }
-  }, []);
+  }, [state.bytes]);
 
   useEffect(() => {
     handleResize();
@@ -90,5 +91,5 @@ export const FileCanvas = () => {
     draw();
   }, [draw]);
 
-  return <canvas className="filecanvas" ref={canvasRef}></canvas>;
+  return <canvas className="filecanvas" ref={canvasRef} />;
 };

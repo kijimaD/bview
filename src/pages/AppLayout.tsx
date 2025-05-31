@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import { Container, Box, Flex, HStack, Heading, Link } from "@chakra-ui/react";
+import { Box, Flex, HStack, Heading, Link } from "@chakra-ui/react";
 
 type Props = {
   href?: string;
@@ -26,13 +26,16 @@ export const AppLayout = () => {
             <HStack>
               <NavLink href={"load"}>Load</NavLink>
               <NavLink href={"view?f=sample/ls"}>ls</NavLink>
+              <NavLink href={"view?f=sample/rfc9593.txt"}>txt</NavLink>
+              <NavLink href={"view?f=sample/go_hello"}>go binary</NavLink>
+              <NavLink href={"view?f=sample/tree.jpg"}>JPG</NavLink>
+              <NavLink href={"view?f=sample/tree_gray.jpg"}>JPG(gray)</NavLink>
+              <NavLink href={"view?f=sample/cat.png"}>PNG</NavLink>
             </HStack>
           </HStack>
         </Flex>
       </Box>
-      <Container py="1em">
-        <Outlet />
-      </Container>
+      <Outlet />
     </>
   );
 };

@@ -144,17 +144,12 @@ describe("outlinePolygon", () => {
       { x: 3, y: 2 },
     ]);
   });
-  it("error", () => {
-    expect(
+  it("隣接してないとerrorを返す", () => {
+    expect(() => {
       outlinePolygon([
         { x: 1, y: 1 },
         { x: 3, y: 1 },
-      ]),
-    ).toEqual([
-      { x: 1, y: 2 },
-      { x: 1, y: 1 },
-      { x: 3, y: 1 },
-      { x: 3, y: 2 },
-    ]);
+      ])
+    }).toThrow("Unexpected corner direction: ??");
   });
 });
