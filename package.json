@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-      "build": "tsc -b && vite build",
-      "production": "vite build --mode production",
+    "build": "tsc -b && vite build",
+    "production": "vite build --mode production",
     "dev": "vite",
     "fmt": "npx prettier . --write",
     "preview": "vite preview",
