@@ -15,7 +15,7 @@ export const HexRow: React.FC<HexRowProps> = ({
   dataBytes,
   view,
   cursor,
-  focusBlockLen,
+  width,
 }) => {
   const handleMouseOver = (
     e: MouseEvent<HTMLSpanElement>,
@@ -50,10 +50,10 @@ export const HexRow: React.FC<HexRowProps> = ({
 
   const bytes: React.ReactNode[] = [];
   const ascii: React.ReactNode[] = [];
-  const end = vOffset + focusBlockLen;
+  const end = vOffset + width;
 
   for (let i = vOffset; i < end; i++) {
-    if (i === vOffset + focusBlockLen / 2) {
+    if (i === vOffset + width / 2) {
       bytes.push(<span key={`brk${i}`} />);
       ascii.push(<span key={`brk${i}`}> </span>);
     }
@@ -84,8 +84,7 @@ interface HexViewProps {
   cursor: number;
   // 縦のオフセット
   vOffset: number;
-  // 横のオフセット
-  wOffset: number;
+  width: number;
 }
 
 export const HexView: React.FC<HexViewProps> = ({
@@ -93,16 +92,24 @@ export const HexView: React.FC<HexViewProps> = ({
   view,
   cursor,
   vOffset,
+  width,
 }) => {
   let lines = [];
+  // 縦のループ
   for (var i = 0; i < vOffset; i++) {
+    // オフセット
+    // 1行目: 0
+    // 2行目: 20
+    // 3行目: 40
+    // というようになる
+    const offset = i * width;
     lines.push(
       <HexRow
-        vOffset={i}
+        vOffset={offset}
         dataBytes={bytes}
         view={view}
         cursor={cursor}
-        focusBlockLen={1}
+        width={width}
       />,
     );
   }
@@ -116,7 +123,6 @@ export const HexView: React.FC<HexViewProps> = ({
               <table>
                 <tbody>
                   <tr>
-                    <th>hex, dec</th>
                     <th></th>
                     <th></th>
                   </tr>
@@ -124,7 +130,7 @@ export const HexView: React.FC<HexViewProps> = ({
                 </tbody>
               </table>
             </td>
-            <td className="scrollbar">scroll bar</td>
+            <td className="scrollbar"></td>
           </tr>
         </tbody>
       </table>

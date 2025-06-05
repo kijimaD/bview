@@ -63,7 +63,7 @@ export function ViewPage() {
               view={state.view}
               cursor={state.cursor}
               vOffset={20}
-              wOffset={16}
+              width={16}
             />
           )}
         </Box>
