@@ -1,23 +1,21 @@
 import React from "react";
-
+import type { View } from "../lib/types";
 import { num } from "../lib/bytes";
 
 interface HexRowProps {
   offset: number;
   dataBytes: Uint8Array;
-  view: { start: number; end: number };
+  view: View;
   cursor: number | null;
   focusBlockLen: number;
-  offsetDecimal: boolean;
 }
 
-const HexRow: React.FC<HexRowProps> = ({
+export const HexRow: React.FC<HexRowProps> = ({
   offset,
   dataBytes,
   view,
   cursor,
   focusBlockLen,
-  offsetDecimal,
 }) => {
   const handleMouseOver = (
     e: MouseEvent<HTMLSpanElement>,
@@ -69,7 +67,7 @@ const HexRow: React.FC<HexRowProps> = ({
     }
   }
 
-  const hoff = offsetDecimal ? num(offset, 10, 7) : num(offset, 16, 7);
+  const hoff = num(offset, 16, 7);
 
   return (
     <tr>
@@ -81,49 +79,20 @@ const HexRow: React.FC<HexRowProps> = ({
 };
 
 interface HexViewProps {
-  dataBytes: Uint8Array;
-  view: { start: number; end: number };
-  focus: { start: number; within: (offset: number) => boolean };
+  bytes: Uint8Array;
+  view: View;
   cursor: number;
-  focusBlockLen: number;
-  focusBlocks: number;
-  offsetDecimal: boolean;
 }
 
-export const HexView: React.FC<HexViewProps> = ({
-  dataBytes,
-  view,
-  focus,
-  cursor,
-  focusBlockLen,
-  focusBlocks,
-  offsetDecimal,
-}) => {
-  const handleWheel = (evt: WheelEvent) => {};
-
-  const handleMouseLeave = () => {};
-
-  const scrollUpdate = (offset: number) => {};
-
-  const lines = Array.from({ length: focusBlocks }, (_, i) => {
-    const blockOffset =
-      Math.floor((focus.start + i * focusBlockLen) / focusBlockLen) *
-      focusBlockLen;
-    const key = `${Math.max(view.start, blockOffset)}-${Math.min(view.end, blockOffset + focusBlockLen)}`;
-
+export const HexView: React.FC<HexViewProps> = ({ bytes, view, cursor }) => {
+  const lines = Array.from({}, (_, i) => {
     return (
       <HexRow
-        key={key}
-        offset={blockOffset}
-        dataBytes={dataBytes}
+        offset={i}
+        dataBytes={bytes}
         view={view}
-        cursor={
-          cursor >= blockOffset && cursor < blockOffset + focusBlockLen
-            ? cursor
-            : null
-        }
-        focusBlockLen={focusBlockLen}
-        offsetDecimal={offsetDecimal}
+        cursor={cursor}
+        focusBlockLen={1}
       />
     );
   });
@@ -134,7 +103,7 @@ export const HexView: React.FC<HexViewProps> = ({
         <tbody>
           <tr>
             <td className="textarea">
-              <table onMouseLeave={handleMouseLeave}>
+              <table>
                 <tbody>
                   <tr>
                     <th>hex, dec</th>

@@ -4,6 +4,7 @@ export type AppState = {
   fileName: string | null;
   bytes: Uint8Array | null;
   view: View;
+  cursor: number;
 };
 
 export const initialState: AppState = {
@@ -15,11 +16,13 @@ export const initialState: AppState = {
       return 0;
     },
   },
+  cursor: 0,
 };
 
 export type Action =
   | { type: "LOAD_FILE"; payload: { fileName: string; bytes: Uint8Array } }
-  | { type: "CLEAR_FILE" };
+  | { type: "CLEAR_FILE" }
+  | { type: "SET_CURSOR"; payload: { cursor: number } };
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -37,6 +40,11 @@ export function reducer(state: AppState, action: Action): AppState {
       };
     case "CLEAR_FILE":
       return initialState;
+    case "SET_CURSOR":
+      return {
+        ...state,
+        cursor: action.payload.cursor,
+      };
     default:
       return state;
   }
