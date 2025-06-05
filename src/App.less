@@ -1,0 +1,44 @@
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+
+#root {
+  max-width: 1280px;
+  padding: 2rem;
+  height: 100%;
+}
+
+.filecanvas {
+  z-index: 1;
+  width: 100%;
+  display: block;
+}
+
+.crawercanvas {
+  position: absolute;
+  z-index: 2;
+}
+
+table {
+  margin-bottom: 0.3em;
+  white-space: pre;
+  border-collapse: collapse;
+  font-size: 14px;
+  td {
+    white-space: pre;
+    padding-right: 1em;
+  }
+  .offset {
+    color: #bd8d00;
+  }
+  .bytes span {
+    padding: 4px;
+  }
+  .ascii span {
+    color: blue;
+    padding: 1px;
+  }
+}

@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.less";
 import { FileLoadPage } from "./pages/FileLoadPage";
 import { ViewPage } from "./pages/ViewPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
