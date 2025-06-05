@@ -82,20 +82,27 @@ interface HexViewProps {
   bytes: Uint8Array;
   view: View;
   cursor: number;
+  offset: number;
 }
 
-export const HexView: React.FC<HexViewProps> = ({ bytes, view, cursor }) => {
-  const lines = Array.from({}, (_, i) => {
-    return (
+export const HexView: React.FC<HexViewProps> = ({
+  bytes,
+  view,
+  cursor,
+  offset,
+}) => {
+  let lines = [];
+  for (var i = 0; i < offset; i++) {
+    lines.push(
       <HexRow
         offset={i}
         dataBytes={bytes}
         view={view}
         cursor={cursor}
         focusBlockLen={1}
-      />
+      />,
     );
-  });
+  }
 
   return (
     <div className="hexview">

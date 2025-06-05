@@ -58,20 +58,12 @@ export function ViewPage() {
           )}
           テーブル
           {state.bytes && (
-            <>
-              <HexView
-                bytes={state.bytes}
-                view={state.view}
-                cursor={state.cursor}
-              />
-              <HexRow
-                offset={1}
-                dataBytes={state.bytes}
-                view={state.view}
-                cursor={state.cursor}
-                focusBlockLen={1}
-              />
-            </>
+            <HexView
+              bytes={state.bytes}
+              view={state.view}
+              cursor={state.cursor}
+              offset={20}
+            />
           )}
         </Box>
       </Flex>
