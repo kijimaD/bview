@@ -3,7 +3,7 @@ import type { View } from "../lib/types";
 import { num } from "../lib/bytes";
 
 interface HexRowProps {
-  offset: number;
+  vOffset: number;
   dataBytes: Uint8Array;
   view: View;
   cursor: number | null;
@@ -11,7 +11,7 @@ interface HexRowProps {
 }
 
 export const HexRow: React.FC<HexRowProps> = ({
-  offset,
+  vOffset,
   dataBytes,
   view,
   cursor,
@@ -19,12 +19,12 @@ export const HexRow: React.FC<HexRowProps> = ({
 }) => {
   const handleMouseOver = (
     e: MouseEvent<HTMLSpanElement>,
-    offset: number,
+    vOffset: number,
   ) => {};
 
   const renderByte = (
     value: number,
-    offset: number,
+    vOffset: number,
     ascii: boolean,
     selected: boolean,
   ) => {
@@ -37,11 +37,11 @@ export const HexRow: React.FC<HexRowProps> = ({
 
     return (
       <span
-        key={offset}
-        data-offset={offset}
+        key={vOffset}
+        data-offset={vOffset}
         className={className}
-        onMouseOver={(e) => handleMouseOver(e, offset)}
-        onClick={() => handleClickByte(offset, ascii)}
+        onMouseOver={(e) => handleMouseOver(e, vOffset)}
+        onClick={() => handleClickByte(vOffset, ascii)}
       >
         {disp}
       </span>
@@ -50,10 +50,10 @@ export const HexRow: React.FC<HexRowProps> = ({
 
   const bytes: React.ReactNode[] = [];
   const ascii: React.ReactNode[] = [];
-  const end = offset + focusBlockLen;
+  const end = vOffset + focusBlockLen;
 
-  for (let i = offset; i < end; i++) {
-    if (i === offset + focusBlockLen / 2) {
+  for (let i = vOffset; i < end; i++) {
+    if (i === vOffset + focusBlockLen / 2) {
       bytes.push(<span key={`brk${i}`} />);
       ascii.push(<span key={`brk${i}`}> </span>);
     }
@@ -67,11 +67,11 @@ export const HexRow: React.FC<HexRowProps> = ({
     }
   }
 
-  const hoff = num(offset, 16, 7);
+  const address = num(vOffset, 16, 7);
 
   return (
     <tr>
-      <td className="offset">{hoff}</td>
+      <td className="address">{address}</td>
       <td className="bytes">{bytes}</td>
       <td className="ascii">{ascii}</td>
     </tr>
@@ -82,20 +82,23 @@ interface HexViewProps {
   bytes: Uint8Array;
   view: View;
   cursor: number;
-  offset: number;
+  // 縦のオフセット
+  vOffset: number;
+  // 横のオフセット
+  wOffset: number;
 }
 
 export const HexView: React.FC<HexViewProps> = ({
   bytes,
   view,
   cursor,
-  offset,
+  vOffset,
 }) => {
   let lines = [];
-  for (var i = 0; i < offset; i++) {
+  for (var i = 0; i < vOffset; i++) {
     lines.push(
       <HexRow
-        offset={i}
+        vOffset={i}
         dataBytes={bytes}
         view={view}
         cursor={cursor}
