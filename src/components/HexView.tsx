@@ -89,7 +89,7 @@ export const HexView: React.FC<HexViewProps> = ({
   vOffset,
   width,
 }) => {
-  let lines = [];
+  const lines = [];
   // 縦のループ
   for (let i = 0; i < vOffset; i++) {
     // オフセット

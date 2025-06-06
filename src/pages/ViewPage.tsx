@@ -56,7 +56,6 @@ export function ViewPage() {
           ) : (
             <Text>file not loaded</Text>
           )}
-          テーブル
           {state.bytes && (
             <HexView
               bytes={state.bytes}
