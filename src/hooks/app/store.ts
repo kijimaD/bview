@@ -12,6 +12,7 @@ export const initialState: AppState = {
   bytes: null,
   view: {
     start: 0,
+    end: 1024,
     len: (): number => {
       return 0;
     },
@@ -32,7 +33,9 @@ export function reducer(state: AppState, action: Action): AppState {
         fileName: action.payload.fileName,
         bytes: action.payload.bytes,
         view: {
+          // TODO: 値を設定する
           start: 0,
+          end: 1024,
           len: (): number => {
             return action.payload.bytes.length;
           },

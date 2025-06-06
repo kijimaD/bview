@@ -7,7 +7,7 @@ interface HexRowProps {
   dataBytes: Uint8Array;
   view: View;
   cursor: number | null;
-  focusBlockLen: number;
+  width: number;
 }
 
 export const HexRow: React.FC<HexRowProps> = ({
@@ -17,11 +17,6 @@ export const HexRow: React.FC<HexRowProps> = ({
   cursor,
   width,
 }) => {
-  const handleMouseOver = (
-    e: MouseEvent<HTMLSpanElement>,
-    vOffset: number,
-  ) => {};
-
   const renderByte = (
     value: number,
     vOffset: number,
@@ -40,8 +35,8 @@ export const HexRow: React.FC<HexRowProps> = ({
         key={vOffset}
         data-offset={vOffset}
         className={className}
-        onMouseOver={(e) => handleMouseOver(e, vOffset)}
-        onClick={() => handleClickByte(vOffset, ascii)}
+        onMouseOver={() => {}}
+        onClick={() => {}}
       >
         {disp}
       </span>
@@ -96,7 +91,7 @@ export const HexView: React.FC<HexViewProps> = ({
 }) => {
   let lines = [];
   // 縦のループ
-  for (var i = 0; i < vOffset; i++) {
+  for (let i = 0; i < vOffset; i++) {
     // オフセット
     // 1行目: 0
     // 2行目: 20
