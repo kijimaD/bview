@@ -1,6 +1,7 @@
 import React from "react";
 import type { View } from "../lib/types";
 import { num } from "../lib/bytes";
+import { useAppContext } from "../hooks/app/AppContext";
 
 interface HexRowProps {
   vOffset: number;
@@ -10,13 +11,24 @@ interface HexRowProps {
   width: number;
 }
 
-export const HexRow: React.FC<HexRowProps> = ({
+const HexRow: React.FC<HexRowProps> = ({
   vOffset,
   dataBytes,
   view,
   cursor,
   width,
 }) => {
+  const { dispatch } = useAppContext();
+  const handleMouseOver = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const offsetStr = e.currentTarget.dataset.offset;
+    if (offsetStr !== undefined) {
+      dispatch({
+        type: "SET_CURSOR",
+        payload: { cursor: parseInt(offsetStr, 10) },
+      });
+    }
+  };
+
   const renderByte = (
     value: number,
     vOffset: number,
@@ -35,7 +47,7 @@ export const HexRow: React.FC<HexRowProps> = ({
         key={vOffset}
         data-offset={vOffset}
         className={className}
-        onMouseOver={() => {}}
+        onMouseOver={handleMouseOver}
         onClick={() => {}}
       >
         {disp}
