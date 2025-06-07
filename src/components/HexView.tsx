@@ -89,19 +89,22 @@ export const HexView: React.FC<HexViewProps> = ({
   height,
 }) => {
   const lines = [];
+
+  const centerLine = Math.floor(height / 2);
+  const startOffset = cursor - centerLine * width;
+  const minOffset = Math.max(view.start, 0);
+  const maxOffset = Math.max(view.end - height * width, 0);
+  const clampedOffset = Math.min(Math.max(startOffset, minOffset), maxOffset);
+
   // 縦のループ
   for (let i = 0; i < height; i++) {
-    // オフセット
-    // 1行目: 0
-    // 2行目: 20
-    // 3行目: 40
-    // というようになる
     lines.push(
       <HexRow
         dataBytes={bytes}
         view={view}
         cursor={cursor}
-        offset={cursor + i * width}
+        key={clampedOffset + i * width + i}
+        offset={clampedOffset + i * width + i}
         width={width}
       />,
     );

@@ -10,7 +10,7 @@ export const FileCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [realSize, setRealSize] = useState({ width: 128, height: 128 });
-  const viewWidth = 256;
+  const viewWidth = 128;
   const viewHeight = 1024;
 
   const handleResize = useCallback(() => {
@@ -53,7 +53,6 @@ export const FileCanvas = () => {
 
     const curve = Scan;
     let r: Rect;
-
     for (let y = 0; y < viewHeight; y++) {
       let run = 0;
       let run_col: string | null = null;
@@ -85,7 +84,23 @@ export const FileCanvas = () => {
         ctx.fillRect(r.point.x, r.point.y, r.w, r.h);
       }
     }
-  }, [state.bytes, state.view, realSize.height, realSize.width]);
+
+    // カーソル範囲周辺に枠を表示する
+    const cursorOffset = state.cursor - state.view.start;
+    if (cursorOffset >= 0 && cursorOffset < state.view.len()) {
+      const logicalOffset = cursorOffset * viewscale;
+      const { x, y } = curve.offsetToPoint(
+        logicalOffset,
+        viewWidth,
+        viewHeight,
+      );
+      const size = 2;
+      let r = createRect(x - size, y - size, size * 2 + 1, size * 2 + 1);
+      r = scaleRect(r, scale);
+      ctx.strokeStyle = "#ffff00";
+      ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
+    }
+  }, [state.bytes, state.view, realSize.height, realSize.width, state.cursor]);
 
   useEffect(() => {
     draw();
