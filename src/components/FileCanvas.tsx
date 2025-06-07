@@ -10,7 +10,7 @@ export const FileCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [realSize, setRealSize] = useState({ width: 128, height: 128 });
-  const viewWidth = 256;
+  const viewWidth = 128;
   const viewHeight = 1024;
 
   const handleResize = useCallback(() => {
