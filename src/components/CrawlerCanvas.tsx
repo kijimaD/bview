@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { extentOutline, scalePolygon } from "../lib/structures";
 import { Scan } from "../lib/curve";
 import { useAppContext } from "../hooks/app/AppContext";
+import type { Point, View } from "../lib/types";
+import type { Curve } from "../lib/curve";
 
 export const CrawlerCanvas = () => {
   const { state } = useAppContext();
@@ -10,8 +12,10 @@ export const CrawlerCanvas = () => {
   const [realSize, setRealSize] = useState({ width: 128, height: 128 });
   const viewWidth = 256;
   const viewHeight = 1024;
+  const canvas = canvasRef.current;
 
   const handleResize = useCallback(() => {
+    if (canvas === null) return;
     if (canvasRef.current && state.bytes) {
       const { offsetWidth } = canvasRef.current;
       const height = state.bytes?.length / 32;
@@ -29,7 +33,6 @@ export const CrawlerCanvas = () => {
   }, [handleResize]);
 
   const draw = useCallback(() => {
-    const canvas = canvasRef.current;
     if (canvas === null) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -91,15 +94,15 @@ export const CrawlerCanvas = () => {
     draw();
   }, [draw]);
 
-  function scale(): number {
-    const canvas = canvasRef.current;
+  function scale(canvas: HTMLCanvasElement): number {
     return canvas.width / viewWidth;
   }
 
   // カーソル移動
   const { dispatch } = useAppContext();
   const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement>) => {
-    const coords = evt_coords(e, scale());
+    if (canvas === null) return;
+    const coords = evt_coords(e, scale(canvas));
     const offset = mouseOffset({
       coords: coords,
       view: state.view,
@@ -141,8 +144,11 @@ export const CrawlerCanvas = () => {
   );
 };
 
-function evt_coords(evt, scale) {
-  var coords = mouseCoords(evt);
+function evt_coords(
+  e: React.MouseEvent<HTMLSpanElement>,
+  scale: number,
+): Point {
+  var coords = mouseCoords(e);
   return {
     x: Math.floor(coords[0] / scale),
     y: Math.floor(coords[1] / scale),
@@ -150,7 +156,7 @@ function evt_coords(evt, scale) {
 }
 
 interface MouseOffsetParams {
-  coords: Coords;
+  coords: Point;
   view: View;
   viewWidth: number;
   viewHeight: number;
@@ -158,7 +164,6 @@ interface MouseOffsetParams {
 
 function mouseOffset({
   coords,
-  len,
   view,
   viewWidth,
   viewHeight,
@@ -173,7 +178,7 @@ function mouseOffset({
   return localOffset + view.start;
 }
 
-function mouseCoords(e: MouseEvent): [number, number] {
+function mouseCoords(e: React.MouseEvent<HTMLSpanElement>): [number, number] {
   let posX = 0;
   let posY = 0;
 
@@ -195,7 +200,13 @@ function mouseCoords(e: MouseEvent): [number, number] {
   return [posX - rect.left, posY - rect.top];
 }
 
-function view_offset(point, viewlen, curve, w, h) {
+function view_offset(
+  point: Point,
+  viewlen: number,
+  curve: Curve,
+  w: number,
+  h: number,
+) {
   var visual_offset = curve.pointToOffset(point, w, h);
   return Math.floor((viewlen / (w * h)) * visual_offset);
 }
