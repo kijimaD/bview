@@ -13,6 +13,7 @@ export type Polygon = Point[];
 // 見る範囲
 export type View = {
   start: number;
+  end: number;
   len: () => number;
 };
 
