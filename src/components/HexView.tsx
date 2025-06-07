@@ -112,10 +112,10 @@ export const HexView: React.FC<HexViewProps> = ({
     const offset = i * width;
     lines.push(
       <HexRow
-        vOffset={offset}
         dataBytes={bytes}
         view={view}
         cursor={cursor}
+        vOffset={offset}
         width={width}
       />,
     );
