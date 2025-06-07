@@ -4,7 +4,7 @@ import { num } from "../lib/bytes";
 import { useAppContext } from "../hooks/app/AppContext";
 
 interface HexRowProps {
-  vOffset: number;
+  offset: number;
   dataBytes: Uint8Array;
   view: View;
   cursor: number | null;
@@ -12,7 +12,7 @@ interface HexRowProps {
 }
 
 const HexRow: React.FC<HexRowProps> = ({
-  vOffset,
+  offset,
   dataBytes,
   view,
   cursor,
@@ -31,7 +31,7 @@ const HexRow: React.FC<HexRowProps> = ({
 
   const renderByte = (
     value: number,
-    vOffset: number,
+    offset: number,
     ascii: boolean,
     selected: boolean,
   ) => {
@@ -44,8 +44,8 @@ const HexRow: React.FC<HexRowProps> = ({
 
     return (
       <span
-        key={vOffset}
-        data-offset={vOffset}
+        key={offset}
+        data-offset={offset}
         className={className}
         onMouseOver={handleMouseOver}
         onClick={() => {}}
@@ -57,10 +57,10 @@ const HexRow: React.FC<HexRowProps> = ({
 
   const bytes: React.ReactNode[] = [];
   const ascii: React.ReactNode[] = [];
-  const end = vOffset + width;
+  const end = offset + width;
 
-  for (let i = vOffset; i < end; i++) {
-    if (i === vOffset + width / 2) {
+  for (let i = offset; i < end; i++) {
+    if (i === offset + width / 2) {
       bytes.push(<span key={`brk${i}`} />);
       ascii.push(<span key={`brk${i}`}> </span>);
     }
@@ -74,7 +74,7 @@ const HexRow: React.FC<HexRowProps> = ({
     }
   }
 
-  const address = num(vOffset, 16, 7);
+  const address = num(offset, 16, 7);
 
   return (
     <tr>
@@ -90,7 +90,7 @@ interface HexViewProps {
   view: View;
   cursor: number;
   // 縦のオフセット
-  vOffset: number;
+  offset: number;
   width: number;
 }
 
@@ -98,12 +98,12 @@ export const HexView: React.FC<HexViewProps> = ({
   bytes,
   view,
   cursor,
-  vOffset,
+  offset,
   width,
 }) => {
   const lines = [];
   // 縦のループ
-  for (let i = 0; i < vOffset; i++) {
+  for (let i = 0; i < offset; i++) {
     // オフセット
     // 1行目: 0
     // 2行目: 20
@@ -115,7 +115,7 @@ export const HexView: React.FC<HexViewProps> = ({
         dataBytes={bytes}
         view={view}
         cursor={cursor}
-        vOffset={offset}
+        offset={offset}
         width={width}
       />,
     );

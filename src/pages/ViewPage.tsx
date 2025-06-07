@@ -61,7 +61,7 @@ export function ViewPage() {
               bytes={state.bytes}
               view={state.view}
               cursor={state.cursor}
-              vOffset={20}
+              offset={20}
               width={16}
             />
           )}
