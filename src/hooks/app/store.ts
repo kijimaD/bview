@@ -35,7 +35,7 @@ export function reducer(state: AppState, action: Action): AppState {
         view: {
           // TODO: 値を設定する
           start: 0,
-          end: 1024,
+          end: action.payload.bytes.length,
           len: (): number => {
             return action.payload.bytes.length;
           },

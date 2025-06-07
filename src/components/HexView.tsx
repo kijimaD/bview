@@ -89,9 +89,9 @@ interface HexViewProps {
   bytes: Uint8Array;
   view: View;
   cursor: number;
-  // 縦のオフセット
   offset: number;
   width: number;
+  height: number;
 }
 
 export const HexView: React.FC<HexViewProps> = ({
@@ -100,22 +100,22 @@ export const HexView: React.FC<HexViewProps> = ({
   cursor,
   offset,
   width,
+  height,
 }) => {
   const lines = [];
   // 縦のループ
-  for (let i = 0; i < offset; i++) {
+  for (let i = 0; i < height; i++) {
     // オフセット
     // 1行目: 0
     // 2行目: 20
     // 3行目: 40
     // というようになる
-    const offset = i * width;
     lines.push(
       <HexRow
         dataBytes={bytes}
         view={view}
         cursor={cursor}
-        offset={offset}
+        offset={offset + i * width}
         width={width}
       />,
     );
