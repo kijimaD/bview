@@ -9,7 +9,7 @@ import { createRect, scaleRect } from "../lib/structures";
 export const FileCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [realSize, setRealSize] = useState({ width: 800, height: 800 });
+  const [realSize, setRealSize] = useState({ width: 128, height: 128 });
   const viewWidth = 256;
   const viewHeight = 1024;
 

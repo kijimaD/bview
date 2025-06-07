@@ -8,13 +8,16 @@ export const CrawlerCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [realSize, setRealSize] = useState({ width: 128, height: 128 });
+  const viewWidth = 256;
+  const viewHeight = 1024;
 
   const handleResize = useCallback(() => {
-    if (canvasRef.current) {
-      const { offsetWidth, offsetHeight } = canvasRef.current;
-      setRealSize({ width: offsetWidth, height: offsetHeight });
+    if (canvasRef.current && state.bytes) {
+      const { offsetWidth } = canvasRef.current;
+      const height = state.bytes?.length / 32;
+      setRealSize({ width: offsetWidth, height: height });
     }
-  }, []);
+  }, [state.bytes]);
 
   useEffect(() => {
     handleResize();
@@ -24,9 +27,6 @@ export const CrawlerCanvas = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [handleResize]);
-
-  const viewWidth = 256;
-  const viewHeight = 1024;
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
