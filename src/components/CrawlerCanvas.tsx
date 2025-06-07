@@ -21,7 +21,7 @@ export const CrawlerCanvas = () => {
       const height = state.bytes?.length / 32;
       setRealSize({ width: offsetWidth, height: height });
     }
-  }, [state.bytes]);
+  }, [state.bytes, canvas]);
 
   useEffect(() => {
     handleResize();
@@ -88,7 +88,7 @@ export const CrawlerCanvas = () => {
     ctx.closePath();
     ctx.stroke();
     ctx.fill();
-  }, [realSize.height, realSize.width, state.bytes, state.view]);
+  }, [realSize.height, realSize.width, state.bytes, state.view, canvas]);
 
   useEffect(() => {
     draw();
@@ -148,7 +148,7 @@ function evt_coords(
   e: React.MouseEvent<HTMLSpanElement>,
   scale: number,
 ): Point {
-  var coords = mouseCoords(e);
+  const coords = mouseCoords(e);
   return {
     x: Math.floor(coords[0] / scale),
     y: Math.floor(coords[1] / scale),
@@ -207,6 +207,6 @@ function view_offset(
   w: number,
   h: number,
 ) {
-  var visual_offset = curve.pointToOffset(point, w, h);
+  const visual_offset = curve.pointToOffset(point, w, h);
   return Math.floor((viewlen / (w * h)) * visual_offset);
 }
