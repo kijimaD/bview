@@ -1,6 +1,11 @@
 // バイナリブロックにマウスオーバー表示する
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { extentOutline, scalePolygon } from "../lib/structures";
+import {
+  createRect,
+  scaleRect,
+  extentOutline,
+  scalePolygon,
+} from "../lib/structures";
 import { Scan } from "../lib/curve";
 import { useAppContext } from "../hooks/app/AppContext";
 import type { Point, View } from "../lib/types";
@@ -12,16 +17,16 @@ export const CrawlerCanvas = () => {
   const [realSize, setRealSize] = useState({ width: 128, height: 128 });
   const viewWidth = 128;
   const viewHeight = 1024;
-  const canvas = canvasRef.current;
 
   const handleResize = useCallback(() => {
+    const canvas = canvasRef.current;
     if (canvas === null) return;
     if (canvasRef.current && state.bytes) {
       const { offsetWidth } = canvasRef.current;
       const height = state.bytes?.length / 32;
       setRealSize({ width: offsetWidth, height: height });
     }
-  }, [state.bytes, canvas]);
+  }, [state.bytes]);
 
   useEffect(() => {
     handleResize();
@@ -33,6 +38,7 @@ export const CrawlerCanvas = () => {
   }, [handleResize]);
 
   const draw = useCallback(() => {
+    const canvas = canvasRef.current;
     if (canvas === null) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -51,48 +57,31 @@ export const CrawlerCanvas = () => {
 
     if (state.view === null) return;
     if (state.bytes === null) return;
-    let poly = extentOutline(
-      Scan,
-      state.view,
-      { start: 0, end: state.bytes.length },
-      viewWidth,
-      viewHeight,
-    );
 
-    poly = scalePolygon(poly, factor);
-    ctx.beginPath();
-    function xrange(x: number): number {
-      if (canvas === null) return 0;
-      const max = canvas.width - viewWidth;
-      if (x < 2) {
-        return 1;
-      } else if (x > max) {
-        return max;
-      }
-      return x;
+    const viewscale = (viewWidth * viewHeight) / state.view.len();
+    const screenScale = canvas.width / viewWidth;
+
+    // カーソル範囲周辺に枠を表示する
+    const curve = Scan;
+    const cursorOffset = state.cursor - state.view.start;
+    if (cursorOffset >= 0 && cursorOffset < state.view.len()) {
+      const logicalOffset = cursorOffset * viewscale;
+      const { x, y } = curve.offsetToPoint(
+        logicalOffset,
+        viewWidth,
+        viewHeight,
+      );
+      const size = 4;
+      let r = createRect(x - size, y - size, size * 2 + 1, size * 2 + 1);
+      r = scaleRect(r, screenScale);
+      ctx.strokeStyle = "#ffff00";
+      ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
     }
-    function yrange(y: number): number {
-      if (canvas === null) return 0;
-      const max = canvas.height - viewHeight;
-      if (y < 2) {
-        return 1;
-      } else if (y > max) {
-        return max;
-      }
-      return y;
-    }
-    ctx.moveTo(xrange(poly[0].x), yrange(poly[0].y));
-    for (let i = 1; i < poly.length; i++) {
-      ctx.lineTo(xrange(poly[i].x), yrange(poly[i].y));
-    }
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-  }, [realSize.height, realSize.width, state.bytes, state.view, canvas]);
+  }, [realSize.height, realSize.width, state.bytes, state.view, state.cursor]);
 
   useEffect(() => {
     draw();
-  }, [draw]);
+  }, [draw, state.cursor]);
 
   function scale(canvas: HTMLCanvasElement): number {
     return canvas.width / viewWidth;
@@ -101,6 +90,7 @@ export const CrawlerCanvas = () => {
   // カーソル移動
   const { dispatch } = useAppContext();
   const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const canvas = canvasRef.current;
     if (canvas === null) return;
     const coords = evt_coords(e, scale(canvas));
     const offset = mouseOffset({
