@@ -8,7 +8,7 @@ export const AppLayout = () => {
     <>
       <Box>
         <Flex>
-          <HStack mb="4">
+          <HStack>
             <Heading>
               <InternalLink to="/">BVIEW</InternalLink>
             </Heading>
