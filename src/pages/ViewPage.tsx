@@ -1,5 +1,5 @@
+import { SummaryOverlay } from "../components/SummaryOverlay";
 import { SummaryCanvas } from "../components/SummaryCanvas";
-import { FileCanvas } from "../components/FileCanvas";
 import { HexView } from "../components/HexView";
 import { useAppContext } from "../hooks/app/AppContext";
 import { Badge, Text, Flex, Box, HStack } from "@chakra-ui/react";
@@ -44,8 +44,8 @@ export function ViewPage() {
             position: "relative",
           }}
         >
+          <SummaryOverlay />
           <SummaryCanvas />
-          <FileCanvas />
         </Box>
         <Box flex="1" p={2} height="100%">
           {state.fileName ? (
