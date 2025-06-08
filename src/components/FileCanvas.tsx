@@ -16,7 +16,9 @@ export const FileCanvas = () => {
     const handleResize = useCallback(() => {
       if (canvasRef.current && state.bytes) {
         const { offsetWidth } = canvasRef.current;
-        const height = state.bytes?.length / 32; // FIXME: ファイルサイズが大きいときに非常に長くなるのでちゃんと設定する
+        // FIXME: ファイルサイズが大きいときに非常に長くなるのでちゃんと設定する
+        // FIXME: 横幅を大きくして描画ピクセルが大きくなるとスクロールが足りなくなる
+        const height = state.bytes?.length / 32;
         setRealSize({ width: offsetWidth, height: height });
       }
     }, [state.bytes]);
@@ -58,6 +60,7 @@ export const FileCanvas = () => {
       const curve = Scan;
       let r: Rect;
       for (let y = 0; y < viewHeight; y++) {
+        // 描画効率のため続く色はまとめて塗る
         let run = 0;
         let runColor: string | null = null;
         for (let x = 0; x < viewWidth; x++) {
@@ -68,11 +71,14 @@ export const FileCanvas = () => {
             state.bytes,
           );
 
+          // 色が変わったら塗る
           if (runColor !== null && runColor !== color) {
             ctx.fillStyle = runColor;
             r = createRect(x - run, y, run, 1);
             r = scaleRect(r, scale);
             ctx.fillRect(r.point.x, r.point.y, r.w, r.h);
+
+            // リセット
             run = 0;
             runColor = color;
           }
@@ -81,6 +87,7 @@ export const FileCanvas = () => {
           run += 1;
         }
 
+        // まとめて塗る
         if (run > 0 && runColor) {
           ctx.fillStyle = runColor;
           r = createRect(viewWidth - run, y, run, 1);
