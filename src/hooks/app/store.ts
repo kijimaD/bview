@@ -5,6 +5,7 @@ export type AppState = {
   bytes: Uint8Array | null;
   view: View;
   cursor: number;
+  byteDrawScale: number;
 };
 
 export const initialState: AppState = {
@@ -12,12 +13,13 @@ export const initialState: AppState = {
   bytes: null,
   view: {
     start: 0,
-    end: 1024,
+    end: 0,
     len: (): number => {
       return 0;
     },
   },
   cursor: 0,
+  byteDrawScale: 1.0,
 };
 
 export type Action =
