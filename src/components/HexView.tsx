@@ -1,6 +1,7 @@
 import React from "react";
 import type { View } from "../lib/types";
 import { num } from "../lib/bytes";
+import { useAppContext } from "../hooks/app/AppContext";
 
 interface HexRowProps {
   offset: number;
@@ -17,6 +18,17 @@ const HexRow: React.FC<HexRowProps> = ({
   cursor,
   width,
 }) => {
+  const { dispatch } = useAppContext();
+  const handleMouseClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const offsetStr = e.currentTarget.dataset.offset;
+    if (offsetStr !== undefined) {
+      dispatch({
+        type: "SET_CURSOR",
+        payload: { cursor: parseInt(offsetStr, 10) },
+      });
+    }
+  };
+
   const renderByte = (
     value: number,
     offset: number,
@@ -35,8 +47,8 @@ const HexRow: React.FC<HexRowProps> = ({
         key={offset}
         data-offset={offset}
         className={className}
+        onClick={handleMouseClick}
         onMouseOver={() => {}}
-        onClick={() => {}}
       >
         {disp}
       </span>
@@ -89,19 +101,22 @@ export const HexView: React.FC<HexViewProps> = ({
   height,
 }) => {
   const lines = [];
+
+  const centerLine = Math.floor(height / 2);
+  const startOffset = cursor - centerLine * width;
+  const minOffset = Math.max(view.start, 0);
+  const maxOffset = Math.max(view.end - height * width, 0);
+  const clampedOffset = Math.min(Math.max(startOffset, minOffset), maxOffset);
+
   // 縦のループ
   for (let i = 0; i < height; i++) {
-    // オフセット
-    // 1行目: 0
-    // 2行目: 20
-    // 3行目: 40
-    // というようになる
     lines.push(
       <HexRow
         dataBytes={bytes}
         view={view}
         cursor={cursor}
-        offset={cursor + i * width}
+        key={clampedOffset + i * width + i}
+        offset={clampedOffset + i * width + i}
         width={width}
       />,
     );
