@@ -19,19 +19,13 @@ export type Curve = {
 
 export const Scan: Curve = {
   offsetToPoint: (offset, canvasWidth) => {
-    const y = Math.floor(offset / canvasWidth);
-    let x = offset % canvasWidth;
-    if (y % 2 === 1) {
-      x = canvasWidth - x - 1;
-    }
-    return { x, y };
+    return {
+      x: offset % canvasWidth,
+      y: Math.floor(offset / canvasWidth),
+    };
   },
 
   pointToOffset: (point, canvasWidth) => {
-    let x = point.x;
-    if (point.y % 2 === 1) {
-      x = canvasWidth - x - 1;
-    }
-    return point.y * canvasWidth + x;
+    return point.y * canvasWidth + point.x;
   },
 };
