@@ -38,6 +38,12 @@ export const AppLayout = () => {
               <Badge variant="outline">
                 <InternalLink to="/view?f=sample/cat.png">PNG</InternalLink>
               </Badge>
+              <Badge variant="outline">
+                <InternalLink to="/view?f=sample/example.mp3">MP3</InternalLink>
+              </Badge>
+              <Badge variant="outline">
+                <InternalLink to="/view?f=sample/example.wav">WAV</InternalLink>
+              </Badge>
               <Link href="https://github.com/kijimaD/bview">
                 <FaGithub />
               </Link>
