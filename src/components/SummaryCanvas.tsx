@@ -7,7 +7,7 @@ import type { Point, View } from "../lib/types";
 import type { Curve } from "../lib/curve";
 import { viewWidth, viewHeight } from "../lib/const";
 
-export const CrawlerCanvas = () => {
+export const SummaryCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [realSize, setRealSize] = useState({ width: 0, height: 0 });
