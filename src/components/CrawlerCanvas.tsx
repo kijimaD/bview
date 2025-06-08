@@ -50,14 +50,16 @@ export const CrawlerCanvas = () => {
     if (state.view === null) return;
     if (state.bytes === null) return;
 
-    const viewscale = (viewWidth * viewHeight) / state.view.len();
+    // canvasサイズで一定
     const screenScale = canvas.width / viewWidth;
+    // 1バイト分を描画するサイズ
+    const viewScale = state.byteDrawScale;
 
     // カーソル位置に枠を表示する
     const curve = Scan;
     const cursorOffset = state.cursor - state.view.start;
     if (cursorOffset >= 0 && cursorOffset < state.view.len()) {
-      const logicalOffset = cursorOffset * viewscale;
+      const logicalOffset = cursorOffset * viewScale;
       const { x, y } = curve.offsetToPoint(
         logicalOffset,
         viewWidth,
@@ -68,25 +70,29 @@ export const CrawlerCanvas = () => {
       ctx.strokeStyle = "#ffff00";
       ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
     }
-  }, [realSize.height, realSize.width, state.bytes, state.view, state.cursor]);
+  }, [
+    realSize.height,
+    realSize.width,
+    state.bytes,
+    state.view,
+    state.cursor,
+    state.byteDrawScale,
+  ]);
 
   useEffect(() => {
     draw();
   }, [draw, state.cursor]);
-
-  function scale(canvas: HTMLCanvasElement): number {
-    return canvas.width / viewWidth;
-  }
 
   // カーソル移動
   const { dispatch } = useAppContext();
   const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement>) => {
     const canvas = canvasRef.current;
     if (canvas === null) return;
-    const coords = evt_coords(e, scale(canvas));
+    const coords = evt_coords(e, canvas.width / viewWidth);
     const offset = mouseOffset({
       coords: coords,
       view: state.view,
+      scale: state.byteDrawScale,
       viewWidth: viewWidth,
       viewHeight: viewHeight,
     });
@@ -141,6 +147,7 @@ interface MouseOffsetParams {
   view: View;
   viewWidth: number;
   viewHeight: number;
+  scale: number;
 }
 
 function mouseOffset({
@@ -148,14 +155,9 @@ function mouseOffset({
   view,
   viewWidth,
   viewHeight,
+  scale,
 }: MouseOffsetParams): number {
-  const localOffset = view_offset(
-    coords,
-    view.len(),
-    Scan,
-    viewWidth,
-    viewHeight,
-  );
+  const localOffset = viewOffset(coords, Scan, scale, viewWidth, viewHeight);
   return localOffset + view.start;
 }
 
@@ -181,13 +183,13 @@ function mouseCoords(e: React.MouseEvent<HTMLSpanElement>): [number, number] {
   return [posX - rect.left, posY - rect.top];
 }
 
-function view_offset(
+function viewOffset(
   point: Point,
-  viewlen: number,
   curve: Curve,
+  scale: number,
   w: number,
   h: number,
 ) {
   const visual_offset = curve.pointToOffset(point, w, h);
-  return Math.floor((viewlen / (w * h)) * visual_offset);
+  return Math.floor(scale * visual_offset);
 }

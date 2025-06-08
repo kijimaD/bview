@@ -36,8 +36,7 @@ export function ViewPage() {
     <>
       <Flex direction="row" height="100%">
         <Box
-          flex="1"
-          p={2}
+          flex="4"
           style={{
             width: "100%",
             height: "100%",

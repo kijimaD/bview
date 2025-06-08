@@ -1,10 +1,16 @@
 import type { View } from "../../lib/types";
 
 export type AppState = {
+  // ファイル名
   fileName: string | null;
+  // 読み込んでいるデータ
   bytes: Uint8Array | null;
+  // 表示中の領域(ほぼ未実装)
   view: View;
+  // 現在カーソルがある位置(読み込み中のデータに対するオフセット)
   cursor: number;
+  // 1バイト分を描画するスケール
+  byteDrawScale: number;
 };
 
 export const initialState: AppState = {
@@ -12,12 +18,13 @@ export const initialState: AppState = {
   bytes: null,
   view: {
     start: 0,
-    end: 1024,
+    end: 0,
     len: (): number => {
       return 0;
     },
   },
   cursor: 0,
+  byteDrawScale: 1.0,
 };
 
 export type Action =
@@ -40,6 +47,7 @@ export function reducer(state: AppState, action: Action): AppState {
             return action.payload.bytes.length;
           },
         },
+        cursor: 0,
       };
     case "CLEAR_FILE":
       return initialState;

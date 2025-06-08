@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
-import { Badge, Box, Flex, HStack, Heading } from "@chakra-ui/react";
+import { Link, Badge, Box, Flex, HStack, Heading } from "@chakra-ui/react";
 import { InternalLink } from "../components/InternalLink";
+import { FaGithub } from "react-icons/fa";
 
 export const AppLayout = () => {
   return (
@@ -37,6 +38,15 @@ export const AppLayout = () => {
               <Badge variant="outline">
                 <InternalLink to="/view?f=sample/cat.png">PNG</InternalLink>
               </Badge>
+              <Badge variant="outline">
+                <InternalLink to="/view?f=sample/example.mp3">MP3</InternalLink>
+              </Badge>
+              <Badge variant="outline">
+                <InternalLink to="/view?f=sample/example.wav">WAV</InternalLink>
+              </Badge>
+              <Link href="https://github.com/kijimaD/bview">
+                <FaGithub />
+              </Link>
             </HStack>
           </HStack>
         </Flex>

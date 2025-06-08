@@ -1,9 +1,10 @@
 import { useFileLoader } from "../hooks/fileloader";
-import { FileUpload, Input } from "@chakra-ui/react";
+import { Text, FileUpload, Input } from "@chakra-ui/react";
 
 export function FileLoadPage() {
   return (
     <>
+      <Text>This application do not send any files!</Text>
       <LoadFile />
     </>
   );
