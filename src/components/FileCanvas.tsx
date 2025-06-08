@@ -57,9 +57,10 @@ export const FileCanvas = () => {
       // 1バイト分を描画するサイズ
       const viewScale = state.byteDrawScale;
 
+      const totalLines = Math.ceil((state.view.len() * viewScale) / viewWidth);
       const curve = Scan;
       let r: Rect;
-      for (let y = 0; y < viewHeight; y++) {
+      for (let y = 0; y < totalLines; y++) {
         // 描画効率のため続く色はまとめて塗る
         let run = 0;
         let runColor: string | null = null;

@@ -10,7 +10,7 @@ export type Extent = {
 
 export type Polygon = Point[];
 
-// 見る範囲
+// 表示中の範囲。未実装
 export type View = {
   start: number;
   end: number;
