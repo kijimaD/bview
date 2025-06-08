@@ -1,10 +1,15 @@
 import type { View } from "../../lib/types";
 
 export type AppState = {
+  // ファイル名
   fileName: string | null;
+  // 読み込んでいるデータ
   bytes: Uint8Array | null;
+  // 表示中の領域(ほぼ未実装)
   view: View;
+  // 現在カーソルがある位置(読み込み中のデータに対するオフセット)
   cursor: number;
+  // 1バイト分を描画するスケール
   byteDrawScale: number;
 };
 
