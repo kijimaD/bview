@@ -42,6 +42,7 @@ export function reducer(state: AppState, action: Action): AppState {
             return action.payload.bytes.length;
           },
         },
+        cursor: 0,
       };
     case "CLEAR_FILE":
       return initialState;
