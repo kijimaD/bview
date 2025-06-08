@@ -1,11 +1,6 @@
 // バイナリブロックにマウスオーバー表示する
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import {
-  createRect,
-  scaleRect,
-  extentOutline,
-  scalePolygon,
-} from "../lib/structures";
+import { createRect, scaleRect } from "../lib/structures";
 import { Scan } from "../lib/curve";
 import { useAppContext } from "../hooks/app/AppContext";
 import type { Point, View } from "../lib/types";
@@ -52,8 +47,6 @@ export const CrawlerCanvas = () => {
     ctx.strokeStyle = "#f2ed85";
     ctx.fillStyle = "rgba(100, 100, 100, 0.2)";
     ctx.lineWidth = 2;
-
-    const factor = canvas.width / viewWidth;
 
     if (state.view === null) return;
     if (state.bytes === null) return;
