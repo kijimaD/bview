@@ -54,7 +54,7 @@ export const CrawlerCanvas = () => {
     const viewscale = (viewWidth * viewHeight) / state.view.len();
     const screenScale = canvas.width / viewWidth;
 
-    // カーソル範囲周辺に枠を表示する
+    // カーソル位置に枠を表示する
     const curve = Scan;
     const cursorOffset = state.cursor - state.view.start;
     if (cursorOffset >= 0 && cursorOffset < state.view.len()) {
@@ -64,8 +64,7 @@ export const CrawlerCanvas = () => {
         viewWidth,
         viewHeight,
       );
-      const size = 4;
-      let r = createRect(x - size, y - size, size * 2 + 1, size * 2 + 1);
+      let r = createRect(x, y, 1, 1);
       r = scaleRect(r, screenScale);
       ctx.strokeStyle = "#ffff00";
       ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
