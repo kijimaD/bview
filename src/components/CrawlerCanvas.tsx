@@ -5,13 +5,12 @@ import { Scan } from "../lib/curve";
 import { useAppContext } from "../hooks/app/AppContext";
 import type { Point, View } from "../lib/types";
 import type { Curve } from "../lib/curve";
+import { viewWidth, viewHeight } from "../lib/const";
 
 export const CrawlerCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [realSize, setRealSize] = useState({ width: 128, height: 128 });
-  const viewWidth = 128;
-  const viewHeight = 1024;
+  const [realSize, setRealSize] = useState({ width: 0, height: 0 });
 
   const handleResize = useCallback(() => {
     const canvas = canvasRef.current;

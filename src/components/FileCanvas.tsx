@@ -5,13 +5,12 @@ import { Scan } from "../lib/curve";
 import type { Rect } from "../lib/types";
 import { ByteClass } from "../lib/colors";
 import { createRect, scaleRect } from "../lib/structures";
+import { viewWidth, viewHeight } from "../lib/const";
 
 export const FileCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [realSize, setRealSize] = useState({ width: 128, height: 128 });
-  const viewWidth = 128;
-  const viewHeight = 1024;
+  const [realSize, setRealSize] = useState({ width: 0, height: 0 });
 
   const handleResize = useCallback(() => {
     if (canvasRef.current && state.bytes) {
