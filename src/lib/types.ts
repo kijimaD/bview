@@ -10,11 +10,10 @@ export type Extent = {
 
 export type Polygon = Point[];
 
-// 表示中の範囲。未実装
+// 表示中の範囲
 export type View = {
   start: number;
   end: number;
-  len: () => number;
 };
 
 export type OnCurve = (p: Point) => boolean;

@@ -19,9 +19,6 @@ export const initialState: AppState = {
   view: {
     start: 0,
     end: 0,
-    len: (): number => {
-      return 0;
-    },
   },
   cursor: 0,
   byteDrawScale: 1.0,
@@ -43,9 +40,6 @@ export function reducer(state: AppState, action: Action): AppState {
           // TODO: 値を設定する
           start: 0,
           end: action.payload.bytes.length,
-          len: (): number => {
-            return action.payload.bytes.length;
-          },
         },
         cursor: 0,
       };

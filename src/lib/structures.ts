@@ -35,7 +35,7 @@ export const extentOutline = (
   w: number,
   h: number,
 ): Polygon => {
-  const scale = (w * h) / view.len();
+  const scale = (w * h) / view.end;
   const view_start = Math.ceil((extent.start - view.start) * scale);
   const view_end = Math.ceil((extent.end - view.start) * scale) - 1;
 
