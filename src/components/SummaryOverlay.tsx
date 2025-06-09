@@ -55,20 +55,39 @@ export const SummaryOverlay = () => {
     // 1バイト分を描画するサイズ
     const viewScale = state.byteDrawScale;
 
-    // カーソル位置に枠を表示する
-    const curve = Scan;
-    const cursorOffset = state.cursor - state.view.start;
-    if (cursorOffset >= 0 && cursorOffset < state.view.end) {
-      const logicalOffset = cursorOffset * viewScale;
-      const { x, y } = curve.offsetToPoint(
-        logicalOffset,
-        viewWidth,
-        viewHeight,
-      );
-      let r = createRect(x, y, 1, 1);
-      r = scaleRect(r, screenScale);
-      ctx.strokeStyle = "#ffff00";
-      ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
+    {
+      // カーソル位置を強調表示する
+      const curve = Scan;
+      const cursorOffset = state.cursor - state.view.start;
+      if (cursorOffset >= 0 && cursorOffset < state.view.end) {
+        const logicalOffset = cursorOffset * viewScale;
+        const { x, y } = curve.offsetToPoint(
+          logicalOffset,
+          viewWidth,
+          viewHeight,
+        );
+        let r = createRect(x, y, 1, 1);
+        r = scaleRect(r, screenScale);
+        ctx.strokeStyle = "yellow";
+        ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
+      }
+    }
+    {
+      // カーソル位置を強調表示する
+      const curve = Scan;
+      const hoverOffset = state.hover - state.view.start;
+      if (hoverOffset >= 0 && hoverOffset < state.view.end) {
+        const logicalOffset = hoverOffset * viewScale;
+        const { x, y } = curve.offsetToPoint(
+          logicalOffset,
+          viewWidth,
+          viewHeight,
+        );
+        let r = createRect(x, y, 1, 1);
+        r = scaleRect(r, screenScale);
+        ctx.strokeStyle = "lightgray";
+        ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
+      }
     }
   }, [
     realSize.height,
@@ -77,6 +96,7 @@ export const SummaryOverlay = () => {
     state.view,
     state.cursor,
     state.byteDrawScale,
+    state.hover,
   ]);
 
   useEffect(() => {

@@ -61,6 +61,7 @@ export function ViewPage() {
               bytes={state.bytes}
               view={state.view}
               cursor={state.cursor}
+              hover={state.hover}
               width={16}
               height={20}
             />
