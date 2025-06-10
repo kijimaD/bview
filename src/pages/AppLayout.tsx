@@ -17,15 +17,20 @@ export const AppLayout = () => {
                 <InternalLink to="/view?f=sample/ls">ls</InternalLink>
               </Badge>
               <Badge variant="outline">
-                <InternalLink to="/view?f=sample/rfc9593.txt">txt</InternalLink>
-              </Badge>
-              <Badge variant="outline">
                 <InternalLink to="/view?f=sample/go_hello">
                   Go binary
                 </InternalLink>
               </Badge>
               <Badge variant="outline">
                 <InternalLink to="/view?f=sample/a.out">C binary</InternalLink>
+              </Badge>
+              <Badge variant="outline">
+                <InternalLink to="/view?f=sample/Hello.class">
+                  Java Class File
+                </InternalLink>
+              </Badge>
+              <Badge variant="outline">
+                <InternalLink to="/view?f=sample/rfc9593.txt">txt</InternalLink>
               </Badge>
               <Badge variant="outline">
                 <InternalLink to="/view?f=sample/tree.jpg">JPG</InternalLink>
@@ -43,6 +48,11 @@ export const AppLayout = () => {
               </Badge>
               <Badge variant="outline">
                 <InternalLink to="/view?f=sample/example.wav">WAV</InternalLink>
+              </Badge>
+              <Badge variant="outline">
+                <InternalLink to="/view?f=sample/hello-world-image.tar">
+                  Docker Image
+                </InternalLink>
               </Badge>
               <Link href="https://github.com/kijimaD/bview">
                 <FaGithub />
