@@ -7,7 +7,7 @@ import { ByteClass } from "../lib/colors";
 import { createRect, scaleRect } from "../lib/structures";
 import { viewWidth, viewHeight } from "../lib/const";
 
-export const FileCanvas = () => {
+export const SummaryCanvas = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [realSize, setRealSize] = useState({ width: 0, height: 0 });
@@ -57,7 +57,7 @@ export const FileCanvas = () => {
       // 1バイト分を描画するサイズ
       const viewScale = state.byteDrawScale;
 
-      const totalLines = Math.ceil((state.view.len() * viewScale) / viewWidth);
+      const totalLines = Math.ceil((state.view.end * viewScale) / viewWidth);
       const curve = Scan;
       let r: Rect;
       for (let y = 0; y < totalLines; y++) {
@@ -109,5 +109,5 @@ export const FileCanvas = () => {
     }, [draw]);
   }
 
-  return <canvas className="filecanvas" ref={canvasRef} />;
+  return <canvas className="summarycanvas" ref={canvasRef} />;
 };

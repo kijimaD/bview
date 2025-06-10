@@ -1,5 +1,11 @@
 import type { Point } from "./types";
 
+// 充填法のインターフェース
+export type Curve = {
+  offsetToPoint: OffsetToPointFn;
+  pointToOffset: PointToOffsetFn;
+};
+
 type OffsetToPointFn = (
   offset: number,
   canvasWidth: number,
@@ -12,11 +18,10 @@ type PointToOffsetFn = (
   canvasHeight: number,
 ) => number;
 
-export type Curve = {
-  offsetToPoint: OffsetToPointFn;
-  pointToOffset: PointToOffsetFn;
-};
+// ================
 
+// 1--->2
+// 3--->4
 export const Scan: Curve = {
   offsetToPoint: (offset, canvasWidth) => {
     return {

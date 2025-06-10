@@ -26,6 +26,13 @@ npm run dev < /dev/null &
 - 全域を一気に描画するので、大きなファイルを読み込んだ場合に遅い。値表示のように、表示中の場所だけ読み込めればよさそう
 - サマリー表示のheight実装がフレーキーで、少しでも高さまわりを変えるとうまく正しく動かなくなるのを直す
 
+## submodule
+
+```
+git submodule update --init
+git submodule update --remote
+```
+
 ## Reference
 
 I heavily referred to the logic and interface:

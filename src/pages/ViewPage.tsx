@@ -1,5 +1,5 @@
-import { CrawlerCanvas } from "../components/CrawlerCanvas";
-import { FileCanvas } from "../components/FileCanvas";
+import { SummaryOverlay } from "../components/SummaryOverlay";
+import { SummaryCanvas } from "../components/SummaryCanvas";
 import { HexView } from "../components/HexView";
 import { useAppContext } from "../hooks/app/AppContext";
 import { Badge, Text, Flex, Box, HStack } from "@chakra-ui/react";
@@ -44,8 +44,8 @@ export function ViewPage() {
             position: "relative",
           }}
         >
-          <CrawlerCanvas />
-          <FileCanvas />
+          <SummaryOverlay />
+          <SummaryCanvas />
         </Box>
         <Box flex="1" p={2} height="100%">
           {state.fileName ? (
@@ -61,6 +61,7 @@ export function ViewPage() {
               bytes={state.bytes}
               view={state.view}
               cursor={state.cursor}
+              hover={state.hover}
               width={16}
               height={20}
             />

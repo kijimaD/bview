@@ -8,6 +8,7 @@ interface HexRowProps {
   dataBytes: Uint8Array;
   view: View;
   cursor: number | null;
+  hover: number | null;
   width: number;
 }
 
@@ -17,6 +18,7 @@ const HexRow: React.FC<HexRowProps> = ({
   view,
   cursor,
   width,
+  hover,
 }) => {
   const { dispatch } = useAppContext();
   const handleMouseClick = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -28,14 +30,25 @@ const HexRow: React.FC<HexRowProps> = ({
       });
     }
   };
+  const handleMouseOver = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const offsetStr = e.currentTarget.dataset.offset;
+    if (offsetStr !== undefined) {
+      dispatch({
+        type: "SET_HOVER",
+        payload: { hover: parseInt(offsetStr, 10) },
+      });
+    }
+  };
 
   const renderByte = (
     value: number,
     offset: number,
     ascii: boolean,
     selected: boolean,
+    hovered: boolean,
   ) => {
-    const className = selected ? "selected" : "";
+    const classNameSelected = selected ? "selected" : "";
+    const classNameHovered = hovered ? "hovered" : "";
     const disp = ascii
       ? value >= 32 && value <= 126
         ? String.fromCharCode(value)
@@ -46,9 +59,9 @@ const HexRow: React.FC<HexRowProps> = ({
       <span
         key={offset}
         data-offset={offset}
-        className={className}
+        className={`${classNameSelected} ${classNameHovered}`}
         onClick={handleMouseClick}
-        onMouseOver={() => {}}
+        onMouseOver={handleMouseOver}
       >
         {disp}
       </span>
@@ -69,8 +82,8 @@ const HexRow: React.FC<HexRowProps> = ({
       ascii.push(<span key={i}> </span>);
     } else {
       const value = dataBytes[i];
-      bytes.push(renderByte(value, i, false, cursor === i));
-      ascii.push(renderByte(value, i, true, cursor === i));
+      bytes.push(renderByte(value, i, false, cursor === i, hover === i));
+      ascii.push(renderByte(value, i, true, cursor === i, hover === i));
     }
   }
 
@@ -91,12 +104,14 @@ interface HexViewProps {
   cursor: number;
   width: number;
   height: number;
+  hover: number;
 }
 
 export const HexView: React.FC<HexViewProps> = ({
   bytes,
   view,
   cursor,
+  hover,
   width,
   height,
 }) => {
@@ -115,6 +130,7 @@ export const HexView: React.FC<HexViewProps> = ({
         dataBytes={bytes}
         view={view}
         cursor={cursor}
+        hover={hover}
         key={clampedOffset + i * width + i}
         offset={clampedOffset + i * width + i}
         width={width}

@@ -7,7 +7,7 @@ import type { Point, View } from "../lib/types";
 import type { Curve } from "../lib/curve";
 import { viewWidth, viewHeight } from "../lib/const";
 
-export const CrawlerCanvas = () => {
+export const SummaryOverlay = () => {
   const { state } = useAppContext();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [realSize, setRealSize] = useState({ width: 0, height: 0 });
@@ -36,6 +36,7 @@ export const CrawlerCanvas = () => {
     if (canvas === null) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // サイズ調整
     if (canvas.width !== realSize.width || canvas.height !== realSize.height) {
@@ -55,20 +56,39 @@ export const CrawlerCanvas = () => {
     // 1バイト分を描画するサイズ
     const viewScale = state.byteDrawScale;
 
-    // カーソル位置に枠を表示する
-    const curve = Scan;
-    const cursorOffset = state.cursor - state.view.start;
-    if (cursorOffset >= 0 && cursorOffset < state.view.len()) {
-      const logicalOffset = cursorOffset * viewScale;
-      const { x, y } = curve.offsetToPoint(
-        logicalOffset,
-        viewWidth,
-        viewHeight,
-      );
-      let r = createRect(x, y, 1, 1);
-      r = scaleRect(r, screenScale);
-      ctx.strokeStyle = "#ffff00";
-      ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
+    {
+      // カーソル位置を強調表示する
+      const curve = Scan;
+      const cursorOffset = state.cursor - state.view.start;
+      if (cursorOffset >= 0 && cursorOffset < state.view.end) {
+        const logicalOffset = cursorOffset * viewScale;
+        const { x, y } = curve.offsetToPoint(
+          logicalOffset,
+          viewWidth,
+          viewHeight,
+        );
+        let r = createRect(x, y, 1, 1);
+        r = scaleRect(r, screenScale);
+        ctx.strokeStyle = "yellow";
+        ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
+      }
+    }
+    {
+      // カーソル位置を強調表示する
+      const curve = Scan;
+      const hoverOffset = state.hover - state.view.start;
+      if (hoverOffset >= 0 && hoverOffset < state.view.end) {
+        const logicalOffset = hoverOffset * viewScale;
+        const { x, y } = curve.offsetToPoint(
+          logicalOffset,
+          viewWidth,
+          viewHeight,
+        );
+        let r = createRect(x, y, 1, 1);
+        r = scaleRect(r, screenScale);
+        ctx.strokeStyle = "lightgray";
+        ctx.strokeRect(r.point.x, r.point.y, r.w, r.h);
+      }
     }
   }, [
     realSize.height,
@@ -77,6 +97,7 @@ export const CrawlerCanvas = () => {
     state.view,
     state.cursor,
     state.byteDrawScale,
+    state.hover,
   ]);
 
   useEffect(() => {
