@@ -81,8 +81,8 @@ export const AppLayout = () => {
               <InternalLink to="/">BVIEW</InternalLink>
             </Heading>
             <HStack>
-              {links.map((item) => (
-                <Badge variant="outline">
+              {links.map((item, index) => (
+                <Badge variant="outline" key={index}>
                   <InternalLink to={`/view?f=${item.path}`}>
                     {item.name}
                   </InternalLink>
