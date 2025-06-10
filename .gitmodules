@@ -1,0 +1,3 @@
+[submodule "public/buseum"]
+	path = public/buseum
+	url = git@github.com:kijimaD/buseum.git
