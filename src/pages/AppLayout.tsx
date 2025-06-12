@@ -3,12 +3,12 @@ import { Link, Badge, Box, Flex, HStack, Heading } from "@chakra-ui/react";
 import { InternalLink } from "../components/InternalLink";
 import { FaGithub } from "react-icons/fa";
 
-interface SampleLink {
+interface ExampleLink {
   path: string;
   name: string;
 }
 
-const links: SampleLink[] = [
+const links: ExampleLink[] = [
   {
     path: "buseum/202501010001_1/cat.png",
     name: "PNG",
@@ -54,6 +54,10 @@ const links: SampleLink[] = [
     name: "Java Class File",
   },
   {
+    path: "buseum/202506102221_15/buseum",
+    name: "WASM",
+  },
+  {
     path: "buseum/202506092000_11/hello-world-image.tar",
     name: "Docker Image",
   },
@@ -62,12 +66,40 @@ const links: SampleLink[] = [
     name: "Git Object(pack)",
   },
   {
+    path: "buseum/202506122357_22/example.sqlite3",
+    name: "SQLite3",
+  },
+  {
     path: "buseum/202506102152_13/example.mp3",
     name: "MP3",
   },
   {
     path: "buseum/202506102153_14/example.wav",
     name: "WAV",
+  },
+  {
+    path: "buseum/202506122116_16/example.avi",
+    name: "AVI",
+  },
+  {
+    path: "buseum/202506122117_17/example.mov",
+    name: "MOV",
+  },
+  {
+    path: "buseum/202506122118_18/example.mp4",
+    name: "MP4",
+  },
+  {
+    path: "buseum/202506122119_19/example.ogg",
+    name: "OGG",
+  },
+  {
+    path: "buseum/202506122120_20/example.webm",
+    name: "WebM",
+  },
+  {
+    path: "buseum/202506122121_21/example.wmv",
+    name: "WMV",
   },
 ];
 
